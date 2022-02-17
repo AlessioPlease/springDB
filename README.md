@@ -74,6 +74,10 @@ and change it to `none` after the table has been created.
 ### You are all set!
 </details>
 
+# Quick project setup
+Make sure to add a  class under `com.alessio.springdb.constants` with a static property `KEY`
+to hold your key.
+
 ## Run
 To run the program execute the **main** function in the SpringDbApplication class.
 
