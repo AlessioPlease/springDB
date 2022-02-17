@@ -1,4 +1,4 @@
-package com.alessio.springdb.daos.auto;
+package com.alessio.springdb.models.auto;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import javax.persistence.Entity;

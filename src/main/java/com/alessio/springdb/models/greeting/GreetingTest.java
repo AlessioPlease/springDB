@@ -1,4 +1,4 @@
-package com.alessio.springdb.daos.greeting;
+package com.alessio.springdb.models.greeting;
 
 @SuppressWarnings("unused")
 public class GreetingTest {
