@@ -1,5 +1,6 @@
 package com.alessio.springdb.models.authentication;
 
+@SuppressWarnings("unused")
 public class AuthenticationRequest {
 
 	private String username;
