@@ -1,6 +1,6 @@
 package com.alessio.springdb.controllers;
 
-import com.alessio.springdb.daos.auto.Auto;
+import com.alessio.springdb.models.auto.Auto;
 import com.alessio.springdb.repositories.AutoRepository;
 
 import java.util.ArrayList;
@@ -10,18 +10,18 @@ import org.springframework.web.bind.annotation.*;
 public class AutoController {
 
 	private final AutoRepository autoRepository;
-
 	public AutoController(AutoRepository autoRepository) {
 		this.autoRepository = autoRepository;
 	}
 
+
 	@PostMapping("/addAuto")
-	public String addAuto(@RequestBody Auto requestAuto) {
-		if (autoRepository.existsById(requestAuto.getId())) {
-			return "Failed: id already present";
+	public String addAuto(@RequestBody Auto auto) {
+		if (autoRepository.existsById(auto.getId())) {
+			return "Insertion failed: id " + auto.getId() + " already present";
 		} else {
-			autoRepository.save(requestAuto);
-			return "Success";
+			autoRepository.save(auto);
+			return "Insertion successful";
 		}
 	}
 
@@ -30,9 +30,9 @@ public class AutoController {
 
 		if (autoRepository.existsById(Integer.parseInt(id))) {
 			autoRepository.delete(new Auto(Integer.parseInt(id)));
-			return "Success";
+			return "Deletion successful";
 		} else {
-			return "Failed: could not find id";
+			return "Deletion failed: could not find id " + id;
 		}
 	}
 
@@ -41,18 +41,4 @@ public class AutoController {
 		return ((ArrayList<Auto>) autoRepository.findAll());
 	}
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 

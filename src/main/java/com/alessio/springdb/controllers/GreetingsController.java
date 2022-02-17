@@ -1,6 +1,6 @@
 package com.alessio.springdb.controllers;
 
-import com.alessio.springdb.daos.greeting.*;
+import com.alessio.springdb.models.greeting.*;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.concurrent.atomic.AtomicLong;

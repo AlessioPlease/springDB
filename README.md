@@ -9,7 +9,12 @@ The fist part is to download, install and set up the MySQL server
 Take note of the URL, username and password during the configuration process.
 
 For the second part you can choose one of two ways.
-## Method 1
+
+<details>
+   <summary>
+      <b>Method 1</b>
+   </summary>
+
 ### Create a table
 1. Download and install [MySQL Workbench](https://dev.mysql.com/downloads/workbench/)
 2. Connect to your database server you set up before
@@ -39,8 +44,13 @@ spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver
 ```
 
 ### You are all set!
+</details>
 
-## Method 2
+<details>
+   <summary>
+      <b>Method 2</b>
+   </summary>
+
 If you don't want to install the MySQL Workbench client you can follow these steps
 to let Java do all the work.
 
@@ -60,6 +70,9 @@ After the first run, the table has been created, and you can change `create` to 
 
 If you are having issues with this configuration try using `update` instead of `create`,
 and change it to `none` after the table has been created.
+
+### You are all set!
+</details>
 
 ## Run
 To run the program execute the **main** function in the SpringDbApplication class.
