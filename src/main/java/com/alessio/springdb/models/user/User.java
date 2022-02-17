@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 
 import javax.persistence.*;
 
+@SuppressWarnings("unused")
 @Entity
 public class User {
 
@@ -24,6 +25,10 @@ public class User {
 	public User(String username, String password) {
 		this.username = username;
 		this.password = password;
+	}
+
+	public Long getId() {
+		return id;
 	}
 
 	public String getUsername() {

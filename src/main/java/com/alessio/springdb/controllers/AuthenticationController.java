@@ -46,20 +46,21 @@ public class AuthenticationController {
 		final UserDetails userDetails = myUserDetailsService.loadUserByUsername(authenticationRequest.getUsername());
 		final String jwt = jwtTokenUtil.generateToken(userDetails);
 
-		return ResponseEntity.ok(new AuthenticationResponse(jwt));
+		return ResponseEntity.ok(new AuthenticationResponse("Authentication successful", jwt));
 	}
 
 	@PostMapping("/register")
-	public String registerUser(@RequestBody AuthenticationRequest authenticationRequest) throws Exception {
+	public ResponseEntity<?> registerUser(@RequestBody AuthenticationRequest authenticationRequest) throws Exception {
 
 		if (userRepository.countByUsernameEquals(authenticationRequest.getUsername()) == 0) {
 
 			String password = new BCryptPasswordEncoder().encode(authenticationRequest.getPassword());
 			userRepository.save(new User(authenticationRequest.getUsername(), password));
 
-			return String.format("Registration successful.\nJWT= %s", new JSONObject(createAuthenticationToken(authenticationRequest)).getJSONObject("body").get("jwt").toString());
+			return ResponseEntity.ok(new AuthenticationResponse("Registration successful",
+					new JSONObject(createAuthenticationToken(authenticationRequest)).getJSONObject("body").get("jwt").toString()));
 		} else {
-			return "Registration failed: username already taken";
+			return ResponseEntity.ok(new AuthenticationResponse("Registration failed: username already taken", ""));
 		}
 	}
 }
