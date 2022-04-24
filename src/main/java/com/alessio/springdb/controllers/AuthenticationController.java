@@ -8,9 +8,9 @@ import com.alessio.springdb.repositories.UserRepository;
 import com.alessio.springdb.services.MyUserDetailsService;
 
 import org.json.JSONObject;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -35,22 +35,22 @@ public class AuthenticationController {
 	}
 
 
-	@PostMapping("/authenticate")
-	public ResponseEntity<?> createAuthenticationToken(@RequestBody AuthenticationRequest authenticationRequest) throws Exception {
+	@PostMapping("/user/authenticate")
+	public ResponseEntity<?> createAuthenticationToken(@RequestBody AuthenticationRequest authenticationRequest) {
 		try {
 			authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(authenticationRequest.getUsername(), authenticationRequest.getPassword()));
-		} catch (BadCredentialsException e) {
-			throw new Exception("Incorrect username or password", e);
+
+			final UserDetails userDetails = myUserDetailsService.loadUserByUsername(authenticationRequest.getUsername());
+			final String jwt = jwtTokenUtil.generateToken(userDetails);
+
+			return ResponseEntity.ok(new AuthenticationResponse("Authentication successful", jwt));
+		} catch (Exception e) {
+			return new ResponseEntity<>(new AuthenticationResponse("Authentication failed: incorrect username or password", ""), HttpStatus.UNAUTHORIZED);
 		}
-
-		final UserDetails userDetails = myUserDetailsService.loadUserByUsername(authenticationRequest.getUsername());
-		final String jwt = jwtTokenUtil.generateToken(userDetails);
-
-		return ResponseEntity.ok(new AuthenticationResponse("Authentication successful", jwt));
 	}
 
-	@PostMapping("/register")
-	public ResponseEntity<?> registerUser(@RequestBody AuthenticationRequest authenticationRequest) throws Exception {
+	@PostMapping("/user/register")
+	public ResponseEntity<?> registerUser(@RequestBody AuthenticationRequest authenticationRequest) {
 
 		if (userRepository.countByUsernameEquals(authenticationRequest.getUsername()) == 0) {
 
@@ -60,7 +60,7 @@ public class AuthenticationController {
 			return ResponseEntity.ok(new AuthenticationResponse("Registration successful",
 					new JSONObject(createAuthenticationToken(authenticationRequest)).getJSONObject("body").get("jwt").toString()));
 		} else {
-			return ResponseEntity.ok(new AuthenticationResponse("Registration failed: username already taken", ""));
+			return new ResponseEntity<>(new AuthenticationResponse("Registration failed: username already taken", ""), HttpStatus.CONFLICT);
 		}
 	}
 }

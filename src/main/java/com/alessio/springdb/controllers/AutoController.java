@@ -15,7 +15,7 @@ public class AutoController {
 	}
 
 
-	@PostMapping("/addAuto")
+	@PostMapping("/auto/addAuto")
 	public String addAuto(@RequestBody Auto auto) {
 		if (autoRepository.existsById(auto.getId())) {
 			return "Insertion failed: id " + auto.getId() + " already present";
@@ -25,7 +25,7 @@ public class AutoController {
 		}
 	}
 
-	@DeleteMapping("/deleteAuto/{id}")
+	@DeleteMapping("/auto/deleteAuto/{id}")
 	public String deleteAuto(@PathVariable String id) {
 
 		if (autoRepository.existsById(Integer.parseInt(id))) {
@@ -36,7 +36,7 @@ public class AutoController {
 		}
 	}
 
-	@GetMapping("/getAllAuto")
+	@GetMapping("/auto/getAllAuto")
 	public ArrayList<Auto> getAllAuto() {
 		return ((ArrayList<Auto>) autoRepository.findAll());
 	}
