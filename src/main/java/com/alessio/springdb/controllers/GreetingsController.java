@@ -11,7 +11,7 @@ public class GreetingsController {
 	private static final String base = "Hello, %s!";
 	private final AtomicLong c = new AtomicLong();
 
-	@GetMapping("/test")
+	@GetMapping("/greeting/test")
 	public Greeting<?> test(@RequestParam(value = "name", defaultValue = "you") String name) {
 		return new Greeting<>(new GreetingTest(c.incrementAndGet(), String.format(base, name)));
 	}
