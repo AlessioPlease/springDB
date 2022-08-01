@@ -1,6 +1,6 @@
 # SpringDB
 SpringDB is a project aimed at learning REST API using the [Spring](https://spring.io) framework.
-It's also linked to a MySQL database so to enable data permanence.
+It's linked to a MySQL database so to enable data permanence and uses JWT to allow stateless sessions.
 
 # Database setup
 The database setup can be split in two parts.
